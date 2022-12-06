@@ -1,0 +1,28 @@
+{% extends "bootstrap/base.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<section id="top-navigation-bar">
+    <div class="container">
+        <nav class="navbar navbar-expand-md bg-light">
+  
+          <a class="navbar-brand" href="#">Soundboard</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              {% for person in people %}
+              <li class="nav-item">
+                <a class="nav-link" href="#{{ person }}">{{ person.title() }}</a>
+              </li>
+              {% endfor %}
+  
+          </div>
+  
+        </nav>
+    </div>
+  </section>
+{% endblock %}
+{% block content %}{% endblock %}
