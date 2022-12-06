@@ -17,6 +17,29 @@ app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
+##Soundboard
+class SoundCred:
+    def __init__(self, location, person, header):
+        self.location = location
+        self.person = person
+        self.title = header
+
+
+dir_path = r"static\sounds\*.mp3"
+sound_list = [sound[14:] for sound in glob.glob(dir_path)]
+
+sorted_list = []
+for item in sound_list:
+    name = item.split("_")[0]
+    title = item.split("_")[1].split(".")[0].title()
+    sound = SoundCred(location=item, person=name, header=title)
+    sorted_list.append(sound)
+
+people = []
+for item in sorted_list:
+    if item.person not in people:
+        people.append(item.person)
+
 ##CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -223,29 +246,7 @@ def delete_post(post_id):
     return redirect(url_for('get_all_posts'))
 
 
-## Soundboard Stuff ##
 
-class SoundCred:
-    def __init__(self, location, person, header):
-        self.location = location
-        self.person = person
-        self.title = header
-
-
-dir_path = r"static\sounds\*.mp3"
-sound_list = [sound[14:] for sound in glob.glob(dir_path)]
-
-sorted_list = []
-for item in sound_list:
-    name = item.split("_")[0]
-    title = item.split("_")[1].split(".")[0].title()
-    sound = SoundCred(location=item, person=name, header=title)
-    sorted_list.append(sound)
-
-people = []
-for item in sorted_list:
-    if item.person not in people:
-        people.append(item.person)
 
 
 @app.route("/soundboard")
