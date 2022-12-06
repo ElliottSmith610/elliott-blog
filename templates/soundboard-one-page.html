@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Soundboard{% endblock %}
+
+
+{% block content %}
+<!-- List of the people -->
+<section id="person-categories">
+  <div class="container">
+    <div class="row">
+      {% for person in people %}
+      <div class="col-md-3">
+        <div class="card text-center">
+          <img src="../static/images/card-header-{{ person }}.png" class="card-top-img" href="#{{ person }}">
+           
+          <a href="#{{ person }}">Go to {{ person.title() }}</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+  <!-- <div class="container">  following was originally in its own container, added the sounds to the navbar to help alignment -->
+{% for person in people %}
+<section id="{{ person }}">
+  <div class="container-fluid">
+    <div class="row">
+      {% for sound in sounds if sound.person == person %}
+      <div class="col-lg-3 col-md-4">
+        <div class="card text-center">
+          <img class="card-img-top image-header" src="../static/images/card-header-{{ sound.person }}.png" alt="Card image cap">
+          <!--    <button onclick="play('static/sounds/{{ sound }}'">Push me</button>-->
+            <div class=card-title>
+              <h5>{{ sound.title }}</h5>
+            </div>
+            <div class="card-body">
+              <audio controls> <!--  class="card-audio"-->
+                <source src="static/sounds/{{ sound.location }}" type="audio/mp3">
+                You browser does not support html5 audio control, unlucky.
+              </audio>
+          <!-- create a class to return sound.title sound.person and sound.location -->
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+  {% endfor %}
+{% endblock %}

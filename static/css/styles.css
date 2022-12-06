@@ -1,0 +1,36 @@
+/* .image-header {
+  width: 70%;
+} */
+body {
+    background-color: grey;
+}
+h5 {
+    margin-top: 7%
+}
+button {
+    font-size: 1.3rem;
+}
+.container-fluid {
+  padding: 6% 10%;
+}
+.container {
+    padding-bottom: 10%;
+}
+.navbar {
+  padding-left: 1rem;
+ /* position: fixed;
+  z-index: 1; */
+}
+.card {
+    background-color: aliceblue;
+    align-content: center;
+    margin-bottom: 7%;
+}
+/* .card-audio {
+  align-content: center;
+  margin-bottom: 0;
+} */
+.card-body {
+  padding: 1rem;
+  margin-bottom: 0;
+}

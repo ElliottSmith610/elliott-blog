@@ -10,7 +10,7 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 import os
-# from dot
+import glob
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY")
@@ -221,6 +221,46 @@ def delete_post(post_id):
     db.session.delete(post_to_delete)
     db.session.commit()
     return redirect(url_for('get_all_posts'))
+
+
+## Soundboard Stuff ##
+
+class SoundCred:
+    def __init__(self, location, person, header):
+        self.location = location
+        self.person = person
+        self.title = header
+
+
+dir_path = r"static\sounds\*.mp3"
+sound_list = [sound[14:] for sound in glob.glob(dir_path)]
+
+sorted_list = []
+for item in sound_list:
+    name = item.split("_")[0]
+    title = item.split("_")[1].split(".")[0].title()
+    sound = SoundCred(location=item, person=name, header=title)
+    sorted_list.append(sound)
+
+people = []
+for item in sorted_list:
+    if item.person not in people:
+        people.append(item.person)
+
+
+@app.route("/soundboard")
+def soundboard():
+    return render_template("soundboard-one-page.html", sounds=sorted_list, people=people)
+
+
+@app.route("/soundboard/<person>")
+def person_page(person):
+    return render_template("insert something here.html")
+
+# Todo: Have homepage with an icon (card) for each person
+# 	With a /home/"person" page which has a list of all files
+
+## End Soundboard
 
 
 if __name__ == "__main__":
